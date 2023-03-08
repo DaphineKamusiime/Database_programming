@@ -1,0 +1,78 @@
+-- SQLBook: Code
+
+CREATE DATABASE SALES;
+use SALES;
+CREATE TABLE Salesman (
+    salesman_id INT PRIMARY KEY ,
+    namme VARCHAR(30),
+    city VARCHAR(10),
+    commission FLOAT
+);
+
+
+CREATE TABLE Customer(
+    customer_id INT PRIMARY KEY,
+    salesman_id INT ,
+    FOREIGN KEY (salesman_id) REFERENCES Salesman(salesman_id),
+    customer_name VARCHAR(40),
+    city VARCHAR(12),
+    grade INT
+
+);
+
+CREATE TABLE Orderz(
+    order_no INT PRIMARY KEY,
+    purch_amt FLOAT,
+    order_date DATE,
+    customer_id INT,
+    FOREIGN KEY(customer_id) REFERENCES Customer(customer_id),
+    salesman_id INT ,
+    FOREIGN KEY (salesman_id) REFERENCES Salesman(salesman_id)
+);
+
+
+INSERT INTO Salesman(salesman_id, namme, city, commission)
+ VALUES (5001,"James Hooq","New York",0.15),
+(5002,"Nail Knite","Paris",0.13),( 5005 ,"Pete Alex","London",0.11),
+(5006,"Mc Lyon","Paris",0.14),(5003,"Lauson Hen",NULL ,0.12),
+(5007,"Paul Adam","Rome",0.13);
+
+
+INSERT INTO Customer(customer_id, salesman_id, customer_name,city,grade)
+ VALUES (3002,5001,"Nick Rimando","New York",100),
+(3005,5002,"Graham Zusi","Carlifornia",200),(3001, NULL ,"Brad Guzan","London",NULL),
+(3004,5006,"Fabian Johns","Paris",300),(3007,5001,"Brad Davis","New York",200),
+(3009,NULL,"Geoff Camero","Berlin",100),(3008,5002,"Julian Green","London",300),
+(3003,5007,"Jory Altidor","Moscow",200);
+
+
+
+INSERT INTO Orderz(order_no, purch_amt, order_date, customer_id, salesman_id)
+ VALUES
+ (70001, 150.5, "2016-10-05", 3005,5002),
+ (70009, 270.65, "2016-09-10", 3001,NULL),
+ (70002, 65.26, "2016-10-05", 3002,5001),
+ (70004, 110.5, "2016-08-17", 3009,NULL),
+ (70007, 948.5, "2016-09-10", 3005,5002),
+ (70005, 2400.6, "2016-07-27", 3007,5001),
+ (70008, 5760, "2016-09-10", 3002,5001),
+ (70010, 1983.43, "2016-10-10", 3004,5006),
+ (70003, 2480.4, "2016-10-10", 3009,NULL),
+ (70012, 250.45, "2016-06-27", 3008,5002),
+ (70011, 75.29, "2016-08-17", 3003,5007);
+
+ 
+
+SELECT namme, commission FROM  Salesman;
+
+SELECT distinct (salesman_id) FROM Orderz;
+
+SELECT namme, city FROM Salesman WHERE city = "Paris";
+
+SELECT * FROM Customer WHERE grade=200;
+
+SELECT order_no, order_date, purch_amt FROM Orderz WHERE salesman_id = 5001;
+
+SELECT * FROM Customer WHERE city="New York" or grade <100;
+
+SELECT * FROM Salesman WHERE commission between 0.12 and 0.14;
